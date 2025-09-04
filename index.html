@@ -4,7 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>골프 OECD 게임</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+            --light-gray: #ecf0f1;
+            --dark-gray: #7f8c8d;
+            --background-color: #f4f7f9;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,40 +29,44 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
             padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(45deg, #2c3e50, #3498db);
-            color: white;
-            padding: 20px;
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 30px 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .header p {
-            font-size: 14px;
+            font-size: 16px;
             opacity: 0.9;
         }
 
         .section {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
+            padding: 25px;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .section:last-child {
@@ -53,972 +74,758 @@
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #2c3e50;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background-color: var(--primary-color);
+            margin-right: 10px;
+            border-radius: 2px;
         }
 
         .player-input {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
+            align-items: center;
         }
 
         .player-input input {
             flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
         .player-input input:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--primary-color);
         }
 
-        .add-player-btn {
-            background: #27ae60;
-            color: white;
+        .btn {
+            background: var(--primary-color);
+            color: var(--white);
             border: none;
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .add-player-btn:hover {
-            background: #229954;
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
         }
+        
+        .btn-secondary { background-color: var(--dark-gray); }
+        .btn-secondary:hover { background-color: #6c7a7b; }
+        
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-danger:hover { background-color: #c0392b; }
 
         .remove-player-btn {
-            background: #e74c3c;
-            color: white;
+            background: none;
             border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
+            color: var(--danger-color);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 24px;
+            padding: 0 5px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
+        .remove-player-btn:hover { opacity: 1; }
 
-        .remove-player-btn:hover {
-            background: #c0392b;
-        }
 
         .rules-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         .rule-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            background-color: var(--light-gray);
+            padding: 12px;
+            border-radius: 8px;
         }
 
         .rule-item input[type="number"] {
             width: 80px;
             padding: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 6px;
             text-align: center;
+            font-size: 14px;
         }
 
         .rule-item label {
             flex: 1;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         .holes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
             margin-top: 15px;
         }
 
         .hole-card {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .hole-card:hover {
-            border-color: #3498db;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.1);
+            transform: translateY(-3px);
         }
 
         .hole-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .hole-number {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
         }
 
         .hole-reset-btn {
-            background: #e74c3c;
+            background: var(--danger-color);
             color: white;
             border: none;
-            padding: 6px 10px;
+            padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
-
-        .hole-reset-btn:hover {
-            background: #c0392b;
-        }
+        .hole-reset-btn:hover { opacity: 1; }
 
         .player-score {
+            margin-bottom: 12px;
+        }
+        
+        .player-name-bar {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 8px;
             padding: 8px;
-            background: #f8f9fa;
+            background: var(--light-gray);
             border-radius: 6px;
         }
 
         .player-name {
             flex: 1;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
         }
 
         .oecd-rules-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            flex: 1;
+            gap: 6px;
+            padding-top: 5px;
         }
 
         .oecd-rule {
-            padding: 6px 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 6px 10px;
+            border-radius: 20px;
             font-size: 12px;
-            background: white;
+            color: var(--white);
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.1);
         }
-
         .oecd-rule:hover {
-            background: #f0f0f0;
-        }
-
-        .oecd-rule.selected {
-            background: #3498db;
-            color: white;
-            border-color: #3498db;
+            transform: scale(1.05);
         }
 
         .add-rule-btn {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 6px 8px;
-            border-radius: 4px;
+            background: none;
+            border: 1px dashed var(--dark-gray);
+            color: var(--dark-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 12px;
             cursor: pointer;
+            transition: all 0.3s;
         }
-
         .add-rule-btn:hover {
-            background: #229954;
+            background: var(--dark-gray);
+            color: var(--white);
         }
 
         .custom-rule-section {
-            background: #f8f9fa;
+            background: #fdfdfd;
             border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            border: 2px dashed #dee2e6;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid var(--light-gray);
         }
 
         .custom-rule-input {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             align-items: center;
         }
 
-        .custom-rule-input input[type="text"] {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
+        .custom-rule-input input {
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
         }
-
-        .custom-rule-input input[type="number"] {
-            width: 100px;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 14px;
-        }
+        .custom-rule-input input[type="text"] { flex: 1; }
+        .custom-rule-input input[type="number"] { width: 120px; text-align: center; }
 
         .add-custom-rule-btn {
-            background: #9b59b6;
+            background: var(--success-color);
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
         }
-
-        .add-custom-rule-btn:hover {
-            background: #8e44ad;
-        }
+        .add-custom-rule-btn:hover { background: #27ae60; }
 
         .custom-rules-list {
-            margin-top: 10px;
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .custom-rule-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            background: white;
-            border-radius: 6px;
-            margin-bottom: 5px;
-            border: 1px solid #e9ecef;
-        }
-
-        .custom-rule-info {
-            flex: 1;
-        }
-
-        .custom-rule-name {
-            font-weight: 500;
+            padding: 8px 12px;
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--light-gray);
             font-size: 14px;
         }
 
-        .custom-rule-amount {
-            font-size: 12px;
-            color: #6c757d;
+        .custom-rule-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        .custom-rule-name { font-weight: 500; }
+        .custom-rule-amount { font-size: 13px; }
 
         .remove-custom-rule-btn {
-            background: #e74c3c;
-            color: white;
+            background: none;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
+            color: var(--danger-color);
             cursor: pointer;
-            font-size: 12px;
+            font-size: 16px;
+            margin-left: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
-
-        .remove-custom-rule-btn:hover {
-            background: #c0392b;
-        }
+        .remove-custom-rule-btn:hover { opacity: 1; }
 
         .total-section {
-            background: linear-gradient(45deg, #2c3e50, #34495e);
+            background: var(--secondary-color);
             color: white;
-            padding: 20px;
-            border-radius: 0 0 20px 20px;
+            padding: 30px 20px;
         }
 
         .total-title {
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         .total-scores {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
 
         .total-score-item {
             background: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
         }
 
         .total-score-name {
-            font-size: 12px;
+            font-size: 14px;
             opacity: 0.8;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .total-score-value {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
         }
 
-        .btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
-        }
-
-        .btn:hover {
-            background: #2980b9;
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-        }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 15px;
-            }
-            
-            .header h1 {
-                font-size: 20px;
-            }
-            
-            .player-input {
-                flex-direction: column;
-            }
-            
+        @media (max-width: 768px) {
             .holes-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .total-scores {
-                grid-template-columns: repeat(2, 1fr);
+            .rules-section {
+                grid-template-columns: 1fr;
             }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { border-radius: 10px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 24px; }
+            .section { padding: 20px; }
+            .player-input { flex-direction: column; align-items: stretch; }
+            .total-scores { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏌️ 골프 OECD 게임</h1>
-            <p>플레이어와 룰을 설정하고 OECD 페널티를 관리하세요</p>
+            <h1>🏌️ 골프 OECD 스코어보드</h1>
+            <p>간편하게 벌금을 기록하고 정산하세요.</p>
         </div>
 
-        <!-- 플레이어 설정 섹션 -->
         <div class="section">
             <div class="section-title">👥 플레이어 설정 (최대 5명)</div>
             <div id="playerInputs">
                 <div class="player-input">
                     <input type="text" placeholder="플레이어 1 이름" maxlength="10">
-                    <button class="remove-player-btn" onclick="removePlayer(this)" style="display: none;">삭제</button>
                 </div>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button class="add-player-btn" onclick="addPlayer()">플레이어 추가</button>
-                <button class="btn btn-secondary" onclick="resetAll()">전체 초기화</button>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn" onclick="addPlayer()">+ 플레이어 추가</button>
+                <button class="btn btn-secondary" onclick="resetAll()">🔄 전체 초기화</button>
             </div>
         </div>
 
-        <!-- OECD 룰 설정 섹션 -->
         <div class="section">
-            <div class="section-title">📋 OECD 룰 설정</div>
+            <div class="section-title">룰 별 벌금 설정</div>
             <div class="rules-section">
-                <div class="rule-item">
-                    <label>오비 (OB)</label>
-                    <input type="number" id="obRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
-                <div class="rule-item">
-                    <label>해저드 (Hazard)</label>
-                    <input type="number" id="hazardRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
-                <div class="rule-item">
-                    <label>멀리건 (Mulligan)</label>
-                    <input type="number" id="mulliganRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
-                <div class="rule-item">
-                    <label>벙커 (Bunker)</label>
-                    <input type="number" id="bunkerRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
-                <div class="rule-item">
-                    <label>쓰리퍼트 (3-Putt)</label>
-                    <input type="number" id="threePuttRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
-                <div class="rule-item">
-                    <label>트리플 보기 (Triple Bogey)</label>
-                    <input type="number" id="tripleBogeyRule" value="1000" min="0" step="100">
-                    <span>원</span>
-                </div>
+                <div class="rule-item"><label>오비 (OB)</label><input type="number" id="obRule" value="2000" min="0" step="100"><span>원</span></div>
+                <div class="rule-item"><label>해저드 (Hazard)</label><input type="number" id="hazardRule" value="1000" min="0" step="100"><span>원</span></div>
+                <div class="rule-item"><label>벙커 (Bunker)</label><input type="number" id="bunkerRule" value="1000" min="0" step="100"><span>원</span></div>
+                <div class="rule-item"><label>쓰리퍼트 (3-Putt)</label><input type="number" id="threePuttRule" value="1000" min="0" step="100"><span>원</span></div>
+                <div class="rule-item"><label>트리플 보기 (Triple)</label><input type="number" id="tripleBogeyRule" value="2000" min="0" step="100"><span>원</span></div>
+                <div class="rule-item"><label>멀리건 (Mulligan)</label><input type="number" id="mulliganRule" value="2000" min="0" step="100"><span>원</span></div>
             </div>
             
-            <!-- 커스텀 룰 추가 섹션 -->
             <div class="custom-rule-section">
-                <div class="section-title" style="font-size: 16px; margin-bottom: 10px;">🎯 커스텀 룰 추가</div>
+                <div class="section-title" style="font-size: 18px; margin-bottom: 15px;">🎯 커스텀 룰 추가/제거</div>
                 <div class="custom-rule-input">
-                    <input type="text" id="customRuleName" placeholder="룰 이름 (예: 오비, 멀리건, 버디)" maxlength="15">
-                    <input type="number" id="customRuleAmount" placeholder="금액 (음수 가능)" step="100">
-                    <span>원</span>
-                    <button class="add-custom-rule-btn" onclick="addCustomRule()">추가</button>
+                    <input type="text" id="customRuleName" placeholder="룰 이름 (예: 원펏, 양파)" maxlength="15">
+                    <input type="number" id="customRuleAmount" placeholder="금액 (보상은 음수)" step="100">
+                    <button class="add-custom-rule-btn" onclick="addCustomRule()">+ 추가</button>
                 </div>
-                <div class="custom-rules-list" id="customRulesList">
-                    <!-- 커스텀 룰들이 여기에 표시됩니다 -->
-                </div>
+                <div class="custom-rules-list" id="customRulesList"></div>
             </div>
         </div>
 
-        <!-- 홀별 OECD 룰 관리 섹션 -->
         <div class="section">
-            <div class="section-title">⛳ 홀별 OECD 룰 관리</div>
-            <div class="holes-grid" id="holesGrid">
-                <!-- 홀 카드들이 여기에 동적으로 생성됩니다 -->
-            </div>
+            <div class="section-title">⛳ 홀별 스코어 기록</div>
+            <div class="holes-grid" id="holesGrid"></div>
         </div>
 
-        <!-- 총점 섹션 -->
         <div class="total-section">
-            <div class="total-title">🏆 최종 결과</div>
-            <div class="total-scores" id="totalScores">
-                <!-- 총점이 여기에 표시됩니다 -->
-            </div>
+            <div class="total-title">🏆 최종 정산</div>
+            <div class="total-scores" id="totalScores"></div>
         </div>
     </div>
 
     <script>
         let players = [];
-        let rules = {
-            ob: 1000,
-            hazard: 500,
-            bunker: 300,
-            threePutt: 200,
-            tripleBogey: 1000
-        };
+        let rules = {};
         let customRules = {};
 
-        // 플레이어 추가
+        // DOM Elements
+        const playerInputsEl = document.getElementById('playerInputs');
+        const holesGridEl = document.getElementById('holesGrid');
+        const totalScoresEl = document.getElementById('totalScores');
+        const customRulesListEl = document.getElementById('customRulesList');
+        const customRuleNameInput = document.getElementById('customRuleName');
+        const customRuleAmountInput = document.getElementById('customRuleAmount');
+
+        const ruleInputs = {
+            ob: document.getElementById('obRule'),
+            hazard: document.getElementById('hazardRule'),
+            mulligan: document.getElementById('mulliganRule'),
+            bunker: document.getElementById('bunkerRule'),
+            threePutt: document.getElementById('threePuttRule'),
+            tripleBogey: document.getElementById('tripleBogeyRule'),
+        };
+
         function addPlayer() {
-            const playerInputs = document.getElementById('playerInputs');
-            const currentPlayers = playerInputs.children.length;
-            
-            if (currentPlayers >= 5) {
+            if (playerInputsEl.children.length >= 5) {
                 alert('최대 5명까지만 추가할 수 있습니다.');
                 return;
             }
-
             const playerDiv = document.createElement('div');
             playerDiv.className = 'player-input';
             playerDiv.innerHTML = `
-                <input type="text" placeholder="플레이어 ${currentPlayers + 1} 이름" maxlength="10">
-                <button class="remove-player-btn" onclick="removePlayer(this)">삭제</button>
+                <input type="text" placeholder="플레이어 ${playerInputsEl.children.length + 1} 이름" maxlength="10">
+                <button class="remove-player-btn" onclick="removePlayer(this)">×</button>
             `;
-            
-            playerInputs.appendChild(playerDiv);
-            updateHoles();
+            playerInputsEl.appendChild(playerDiv);
+            updateAndRender();
         }
 
-        // 플레이어 삭제
         function removePlayer(button) {
-            const playerInputs = document.getElementById('playerInputs');
-            if (playerInputs.children.length > 1) {
-                button.parentElement.remove();
-                updateHoles();
-            }
+            button.parentElement.remove();
+            updateAndRender();
         }
 
-        // 플레이어 목록 업데이트
         function updatePlayers() {
-            players = [];
-            const inputs = document.querySelectorAll('#playerInputs input');
-            inputs.forEach(input => {
-                if (input.value.trim()) {
-                    players.push(input.value.trim());
-                }
-            });
+            players = Array.from(playerInputsEl.querySelectorAll('input'))
+                           .map(input => input.value.trim())
+                           .filter(name => name);
         }
-
-        // 커스텀 룰 추가
+        
         function addCustomRule() {
-            const nameInput = document.getElementById('customRuleName');
-            const amountInput = document.getElementById('customRuleAmount');
-            
-            const name = nameInput.value.trim();
-            const amount = parseInt(amountInput.value) || 0;
-            
+            const name = customRuleNameInput.value.trim();
+            const amount = parseInt(customRuleAmountInput.value) || 0;
+
             if (!name) {
                 alert('룰 이름을 입력해주세요.');
                 return;
             }
-            
-            if (amount === 0) {
-                alert('금액을 입력해주세요. (음수도 가능합니다)');
-                return;
-            }
-            
-            // 기본 룰과 중복 확인
-            const basicRuleNames = ['오비', '해저드', '멀리건', '벙커', '쓰리퍼트', '트리플보기'];
-            if (basicRuleNames.includes(name)) {
-                alert('기본 룰과 동일한 이름은 사용할 수 없습니다.');
-                return;
-            }
-            
-            // 커스텀 룰 중복 확인
-            if (customRules[name]) {
+            if (Object.keys(rules).some(key => rules[key].name.toLowerCase() === name.toLowerCase()) || customRules[name]) {
                 alert('이미 존재하는 룰 이름입니다.');
                 return;
             }
-            
-            // 커스텀 룰 추가
-            const ruleKey = 'custom_' + Date.now();
-            customRules[name] = { key: ruleKey, amount: amount };
-            
-            // UI에 표시
-            displayCustomRules();
-            
-            // 입력 필드 초기화
-            nameInput.value = '';
-            amountInput.value = '';
-            
-            // 홀 업데이트
-            updateHoles();
+
+            customRules[name] = { amount: amount };
+            customRuleNameInput.value = '';
+            customRuleAmountInput.value = '';
+            updateAndRender();
         }
-        
-        // 커스텀 룰 표시
-        function displayCustomRules() {
-            const customRulesList = document.getElementById('customRulesList');
-            customRulesList.innerHTML = '';
-            
-            Object.entries(customRules).forEach(([name, rule]) => {
-                const ruleItem = document.createElement('div');
-                ruleItem.className = 'custom-rule-item';
-                const amountText = rule.amount >= 0 ? 
-                    `+${rule.amount.toLocaleString()}원` : 
-                    `${rule.amount.toLocaleString()}원`;
-                const amountColor = rule.amount >= 0 ? '#e74c3c' : '#2980b9';
-                
-                ruleItem.innerHTML = `
-                    <div class="custom-rule-info">
-                        <div class="custom-rule-name">${name}</div>
-                        <div class="custom-rule-amount" style="color: ${amountColor};">${amountText}</div>
-                    </div>
-                    <button class="remove-custom-rule-btn" onclick="removeCustomRule('${name}')">삭제</button>
-                `;
-                customRulesList.appendChild(ruleItem);
-            });
-        }
-        
-        // 커스텀 룰 삭제
+
         function removeCustomRule(name) {
             delete customRules[name];
-            displayCustomRules();
-            updateHoles();
+            updateAndRender();
         }
-        
 
-        
-        // 특정 홀 초기화
-        function resetHole(holeNumber) {
-            if (confirm(`${holeNumber}번 홀의 모든 룰을 초기화하시겠습니까?`)) {
-                for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
-                    const rulesContainer = document.getElementById(`rules_${holeNumber}_${playerIndex}`);
-                    if (rulesContainer) {
-                        // 선택된 룰들만 제거 (추가 버튼은 유지)
-                        const selectedRules = rulesContainer.querySelectorAll('.oecd-rule.selected');
-                        selectedRules.forEach(rule => rule.remove());
-                    }
-                }
-                updateTotal();
-            }
-        }
-        
-        // 전체 초기화
-        function resetAll() {
-            if (confirm('모든 데이터를 초기화하시겠습니까?\n(플레이어, 룰 설정, 선택된 룰 모두 삭제됩니다)')) {
-                // 플레이어 초기화
-                const playerInputs = document.getElementById('playerInputs');
-                playerInputs.innerHTML = `
-                    <div class="player-input">
-                        <input type="text" placeholder="플레이어 1 이름" maxlength="10">
-                        <button class="remove-player-btn" onclick="removePlayer(this)" style="display: none;">삭제</button>
-                    </div>
-                `;
-                
-                // 기본 룰 초기화
-                document.getElementById('obRule').value = '1000';
-                document.getElementById('hazardRule').value = '1000';
-                document.getElementById('mulliganRule').value = '1000';
-                document.getElementById('bunkerRule').value = '1000';
-                document.getElementById('threePuttRule').value = '1000';
-                document.getElementById('tripleBogeyRule').value = '1000';
-                
-                // 커스텀 룰 초기화
-                customRules = {};
-                displayCustomRules();
-                
-                // 모든 홀의 선택된 룰 초기화
-                for (let hole = 1; hole <= 18; hole++) {
-                    for (let playerIndex = 0; playerIndex < 5; playerIndex++) {
-                        const rulesContainer = document.getElementById(`rules_${hole}_${playerIndex}`);
-                        if (rulesContainer) {
-                            const selectedRules = rulesContainer.querySelectorAll('.oecd-rule.selected');
-                            selectedRules.forEach(rule => rule.remove());
-                        }
-                    }
-                }
-                
-                // 변수 초기화
-                players = [];
-                rules = {
-                    ob: 1000,
-                    hazard: 1000,
-                    mulligan: 1000,
-                    bunker: 1000,
-                    threePutt: 1000,
-                    tripleBogey: 1000
-                };
-                
-                updateHoles();
-                updateTotal();
-                
-                // 로컬 스토리지 초기화
-                localStorage.removeItem('golfOECDGame');
-            }
-        }
-        
-        // 룰 업데이트
         function updateRules() {
-            rules.ob = parseInt(document.getElementById('obRule').value) || 0;
-            rules.hazard = parseInt(document.getElementById('hazardRule').value) || 0;
-            rules.mulligan = parseInt(document.getElementById('mulliganRule').value) || 0;
-            rules.bunker = parseInt(document.getElementById('bunkerRule').value) || 0;
-            rules.threePutt = parseInt(document.getElementById('threePuttRule').value) || 0;
-            rules.tripleBogey = parseInt(document.getElementById('tripleBogeyRule').value) || 0;
+            rules = {
+                ob: { name: '오비', amount: parseInt(ruleInputs.ob.value) || 0, color: '#e74c3c' },
+                hazard: { name: '해저드', amount: parseInt(ruleInputs.hazard.value) || 0, color: '#f39c12' },
+                mulligan: { name: '멀리건', amount: parseInt(ruleInputs.mulligan.value) || 0, color: '#e74e22' },
+                bunker: { name: '벙커', amount: parseInt(ruleInputs.bunker.value) || 0, color: '#f1c40f' },
+                threePutt: { name: '쓰리퍼트', amount: parseInt(ruleInputs.threePutt.value) || 0, color: '#9b59b6' },
+                tripleBogey: { name: '트리플보기', amount: parseInt(ruleInputs.tripleBogey.value) || 0, color: '#e67e22' }
+            };
         }
 
-        // 홀 카드 생성
-        function createHoleCard(holeNumber) {
+        function renderHoles() {
+            holesGridEl.innerHTML = '';
+            for (let i = 1; i <= 18; i++) {
+                holesGridEl.innerHTML += createHoleCardHTML(i);
+            }
+        }
+        
+        function createHoleCardHTML(holeNumber) {
             return `
-                <div class="hole-card">
+                <div class="hole-card" data-hole="${holeNumber}">
                     <div class="hole-header">
                         <span class="hole-number">${holeNumber}번 홀</span>
                         <button class="hole-reset-btn" onclick="resetHole(${holeNumber})">초기화</button>
                     </div>
-                    <div class="hole-scores" id="hole${holeNumber}">
+                    <div class="hole-scores">
                         ${players.map((player, index) => `
                             <div class="player-score">
-                                <span class="player-name">${player}</span>
-                                <div class="oecd-rules-container" id="rules_${holeNumber}_${index}">
-                                    <button class="add-rule-btn" onclick="addRule(${holeNumber}, ${index})">+ 룰 추가</button>
+                                <div class="player-name-bar">
+                                    <span class="player-name">${player}</span>
+                                    <button class="add-rule-btn" onclick="showRuleMenu(this, ${holeNumber}, ${index})">+ 룰 추가</button>
                                 </div>
+                                <div class="oecd-rules-container" id="rules_${holeNumber}_${index}"></div>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             `;
         }
+        
+        function showRuleMenu(button, holeNumber, playerIndex) {
+            const allRules = { ...rules, ...Object.fromEntries(Object.entries(customRules).map(([name, rule]) => [name, {...rule, name}])) };
+            
+            const menu = document.createElement('div');
+            menu.className = 'rule-menu';
+            menu.style.cssText = `
+                position: absolute;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 100;
+                padding: 5px;
+            `;
 
-        // 홀 업데이트
-        function updateHoles() {
-            updatePlayers();
-            const holesGrid = document.getElementById('holesGrid');
-            holesGrid.innerHTML = '';
-            
-            for (let i = 1; i <= 18; i++) {
-                holesGrid.innerHTML += createHoleCard(i);
+            for (const key in allRules) {
+                const rule = allRules[key];
+                const item = document.createElement('div');
+                item.textContent = `${rule.name} (${rule.amount.toLocaleString()}원)`;
+                item.style.cssText = `
+                    padding: 8px 12px;
+                    cursor: pointer;
+                `;
+                item.onmouseover = () => item.style.backgroundColor = '#f0f0f0';
+                item.onmouseout = () => item.style.backgroundColor = 'white';
+                item.onclick = () => {
+                    addRuleToPlayer(holeNumber, playerIndex, key, rule);
+                    document.body.removeChild(menu);
+                };
+                menu.appendChild(item);
             }
+
+            document.body.appendChild(menu);
+            const rect = button.getBoundingClientRect();
+            menu.style.left = `${rect.left}px`;
+            menu.style.top = `${rect.bottom + 5}px`;
+
+            document.addEventListener('click', (e) => {
+                if (!menu.contains(e.target) && e.target !== button) {
+                    if(document.body.contains(menu)) document.body.removeChild(menu);
+                }
+            }, { once: true });
+        }
+
+        function addRuleToPlayer(holeNumber, playerIndex, ruleKey, ruleData) {
+            const rulesContainer = document.getElementById(`rules_${holeNumber}_${playerIndex}`);
+            const ruleElement = document.createElement('span');
+            ruleElement.className = 'oecd-rule';
+            ruleElement.dataset.rule = ruleKey;
             
+            let color = ruleData.color;
+            if (!color) {
+                color = ruleData.amount >= 0 ? '#6c757d' : '#2980b9';
+            }
+
+            ruleElement.style.backgroundColor = color;
+            ruleElement.style.borderColor = color;
+            ruleElement.textContent = ruleData.name;
+            
+            ruleElement.onclick = () => {
+                ruleElement.remove();
+                updateTotal();
+            };
+
+            rulesContainer.appendChild(ruleElement);
             updateTotal();
         }
 
-        // 룰 추가 함수
-        function addRule(holeNumber, playerIndex) {
-            const rulesContainer = document.getElementById(`rules_${holeNumber}_${playerIndex}`);
-            
-            // 기본 룰 타입
-            const ruleTypes = [
-                { key: 'ob', name: '오비', color: '#e74c3c' },
-                { key: 'hazard', name: '해저드', color: '#f39c12' },
-                { key: 'mulligan', name: '멀리건', color: '#e74e22' },
-                { key: 'bunker', name: '벙커', color: '#f1c40f' },
-                { key: 'threePutt', name: '쓰리퍼트', color: '#9b59b6' },
-                { key: 'tripleBogey', name: '트리플보기', color: '#e67e22' }
-            ];
-            
-            // 커스텀 룰 추가
-            Object.entries(customRules).forEach(([name, rule]) => {
-                const color = rule.amount >= 0 ? '#6c757d' : '#2980b9'; // 음수는 초록색
-                ruleTypes.push({
-                    key: rule.key,
-                    name: name,
-                    color: color,
-                    amount: rule.amount
+        function resetHole(holeNumber) {
+            if (!confirm(`${holeNumber}번 홀의 모든 기록을 초기화하시겠습니까?`)) return;
+            const holeCard = document.querySelector(`.hole-card[data-hole='${holeNumber}']`);
+            if (holeCard) {
+                holeCard.querySelectorAll('.oecd-rules-container').forEach(container => {
+                    container.innerHTML = '';
                 });
-            });
-
-            // 모든 룰을 사용 가능하게 설정 (중복 선택 허용)
-            const availableRules = ruleTypes;
-
-            if (availableRules.length === 0) {
-                alert('사용 가능한 룰이 없습니다.');
-                return;
             }
-
-            // 룰 선택 드롭다운 생성
-            const select = document.createElement('select');
-            select.style.cssText = 'padding: 4px; margin: 2px; border-radius: 4px; font-size: 12px;';
-            select.innerHTML = '<option value="">룰 선택</option>' + 
-                availableRules.map(rule => {
-                    const amount = rule.amount || rules[rule.key] || 0;
-                    const amountText = amount >= 0 ? 
-                        `${amount}원` : 
-                        `${amount}원`;
-                    return `<option value="${rule.key}">${rule.name} (${amountText})</option>`;
-                }).join('');
-
-            select.addEventListener('change', function() {
-                if (this.value) {
-                    const selectedRule = availableRules.find(r => r.key === this.value);
-                    const ruleElement = document.createElement('span');
-                    ruleElement.className = 'oecd-rule selected';
-                    ruleElement.dataset.rule = this.value;
-                    ruleElement.style.backgroundColor = selectedRule.color;
-                    ruleElement.style.borderColor = selectedRule.color;
-                    ruleElement.textContent = selectedRule.name;
-                    
-                    ruleElement.addEventListener('click', function() {
-                        this.remove();
-                        updateTotal();
-                    });
-
-                    rulesContainer.insertBefore(ruleElement, rulesContainer.querySelector('.add-rule-btn'));
-                    this.remove();
-                    updateTotal();
-                }
-            });
-
-            rulesContainer.insertBefore(select, rulesContainer.querySelector('.add-rule-btn'));
+            updateTotal();
         }
 
-        // 총점 계산 및 업데이트
+        function resetAll() {
+            if (!confirm('모든 데이터를 초기화하시겠습니까?')) return;
+            
+            playerInputsEl.innerHTML = `
+                <div class="player-input">
+                    <input type="text" placeholder="플레이어 1 이름" maxlength="10">
+                </div>
+            `;
+            
+            Object.keys(ruleInputs).forEach(key => {
+                ruleInputs[key].value = {ob: 2000, hazard: 1000, bunker: 1000, threePutt: 1000, tripleBogey: 2000, mulligan: 2000}[key];
+            });
+
+            customRules = {};
+            localStorage.removeItem('golfOECDGame');
+            updateAndRender();
+        }
+
+        function renderCustomRules() {
+            customRulesListEl.innerHTML = '';
+            for (const name in customRules) {
+                const rule = customRules[name];
+                const item = document.createElement('div');
+                item.className = 'custom-rule-item';
+                const amountText = `${rule.amount >= 0 ? '+' : ''}${rule.amount.toLocaleString()}원`;
+                const amountColor = rule.amount >= 0 ? 'var(--danger-color)' : 'var(--success-color)';
+
+                item.innerHTML = `
+                    <div class="custom-rule-info">
+                        <span class="custom-rule-name">${name}</span>
+                        <span class="custom-rule-amount" style="color: ${amountColor};">${amountText}</span>
+                    </div>
+                    <button class="remove-custom-rule-btn" onclick="removeCustomRule('${name}')">×</button>
+                `;
+                customRulesListEl.appendChild(item);
+            }
+        }
+
         function updateTotal() {
             updatePlayers();
-            updateRules();
-            
-            const playerTotals = {};
-            players.forEach(player => {
-                playerTotals[player] = { penalty: 0 };
-            });
+            const playerTotals = players.reduce((acc, player) => ({ ...acc, [player]: 0 }), {});
 
-            // 각 홀의 페널티 계산
-            for (let hole = 1; hole <= 18; hole++) {
-                for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
-                    const rulesContainer = document.getElementById(`rules_${hole}_${playerIndex}`);
-                    if (!rulesContainer) continue;
-
-                    const selectedRules = rulesContainer.querySelectorAll('.oecd-rule.selected');
-                    const player = players[playerIndex];
-
-                    if (player) {
-                        selectedRules.forEach(ruleElement => {
-                            const ruleKey = ruleElement.dataset.rule;
-                            
-                            // 기본 룰인 경우
-                            if (rules[ruleKey]) {
-                                playerTotals[player].penalty += rules[ruleKey];
-                            }
-                            // 커스텀 룰인 경우
-                            else {
-                                const customRule = Object.values(customRules).find(rule => rule.key === ruleKey);
-                                if (customRule) {
-                                    // 커스텀 룰의 금액을 그대로 사용 (음수도 포함)
-                                    playerTotals[player].penalty += customRule.amount;
-                                }
-                            }
-                        });
+            document.querySelectorAll('.oecd-rule').forEach(ruleEl => {
+                const container = ruleEl.closest('.oecd-rules-container');
+                const playerIndex = parseInt(container.id.split('_')[2]);
+                const player = players[playerIndex];
+                
+                if (player) {
+                    const ruleKey = ruleEl.dataset.rule;
+                    const allRules = { ...rules, ...Object.fromEntries(Object.entries(customRules).map(([name, rule]) => [name, {...rule, name}])) };
+                    const rule = allRules[ruleKey];
+                    if (rule) {
+                        playerTotals[player] += rule.amount;
                     }
                 }
-            }
-
-            // 총점 표시 업데이트
-            const totalScores = document.getElementById('totalScores');
-            totalScores.innerHTML = '';
-
-            Object.entries(playerTotals).forEach(([player, total]) => {
-                const totalElement = document.createElement('div');
-                totalElement.className = 'total-score-item';
-                const penaltyText = total.penalty >= 0 ? 
-                    `+${total.penalty.toLocaleString()}원` : 
-                    `${total.penalty.toLocaleString()}원`;
-                const penaltyColor = total.penalty >= 0 ? '#e74c3c' : '#2980b9';
-                
-                totalElement.innerHTML = `
-                    <div class="total-score-name">${player}</div>
-                    <div class="total-score-value" style="font-size: 16px; color: ${penaltyColor};">
-                        ${penaltyText}
-                    </div>
-                `;
-                totalScores.appendChild(totalElement);
             });
+
+            totalScoresEl.innerHTML = '';
+            for (const player in playerTotals) {
+                const total = playerTotals[player];
+                const item = document.createElement('div');
+                item.className = 'total-score-item';
+                const valueText = `${total >= 0 ? '+' : ''}${total.toLocaleString()}원`;
+                const valueColor = total >= 0 ? 'var(--danger-color)' : 'var(--success-color)';
+
+                item.innerHTML = `
+                    <div class="total-score-name">${player}</div>
+                    <div class="total-score-value" style="color: ${valueColor};">${valueText}</div>
+                `;
+                totalScoresEl.appendChild(item);
+            }
+            saveState();
+        }
+        
+        function updateAndRender() {
+            updatePlayers();
+            updateRules();
+            renderCustomRules();
+            renderHoles();
+            updateTotal();
         }
 
-        // 룰 변경 시 홀 업데이트
-        document.addEventListener('DOMContentLoaded', function() {
-            // 룰 입력 필드에 이벤트 리스너 추가
-            const ruleInputs = document.querySelectorAll('.rules-section input');
-            ruleInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    updateRules();
-                    updateHoles();
+        function saveState() {
+            const state = {
+                players: Array.from(playerInputsEl.querySelectorAll('input')).map(i => i.value),
+                ruleValues: Object.fromEntries(Object.entries(ruleInputs).map(([key, input]) => [key, input.value])),
+                customRules,
+                scores: {}
+            };
+
+            document.querySelectorAll('.hole-card').forEach(card => {
+                const hole = card.dataset.hole;
+                state.scores[hole] = {};
+                card.querySelectorAll('.oecd-rules-container').forEach(container => {
+                    const playerIndex = container.id.split('_')[2];
+                    state.scores[hole][playerIndex] = Array.from(container.querySelectorAll('.oecd-rule')).map(r => r.dataset.rule);
                 });
             });
 
-            // 플레이어 입력 필드에 이벤트 리스너 추가
-            document.addEventListener('input', function(e) {
-                if (e.target.matches('#playerInputs input')) {
-                    updateHoles();
-                }
-            });
+            localStorage.setItem('golfOECDGame', JSON.stringify(state));
+        }
 
-            // 초기 홀 생성
-            updateHoles();
-            
-            // 커스텀 룰 표시 초기화
-            displayCustomRules();
-        });
+        function loadState() {
+            const savedState = localStorage.getItem('golfOECDGame');
+            if (!savedState) return;
 
-        // 페이지 새로고침 시 데이터 보존
-        window.addEventListener('beforeunload', function() {
-            const gameData = {
-                players: players,
-                rules: rules,
-                customRules: customRules,
-                selectedRules: {}
-            };
+            const state = JSON.parse(savedState);
 
-            // 각 홀의 선택된 룰 저장
-            for (let hole = 1; hole <= 18; hole++) {
-                gameData.selectedRules[hole] = {};
-                for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
-                    const rulesContainer = document.getElementById(`rules_${hole}_${playerIndex}`);
-                    if (rulesContainer) {
-                        const selectedRules = Array.from(rulesContainer.querySelectorAll('.oecd-rule.selected'))
-                            .map(rule => rule.dataset.rule);
-                        gameData.selectedRules[hole][playerIndex] = selectedRules;
-                    }
-                }
+            if (state.players) {
+                playerInputsEl.innerHTML = '';
+                state.players.forEach((name, index) => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'player-input';
+                    playerDiv.innerHTML = `
+                        <input type="text" value="${name}" placeholder="플레이어 ${index + 1} 이름" maxlength="10">
+                        ${playerInputsEl.children.length > 0 ? `<button class="remove-player-btn" onclick="removePlayer(this)">×</button>` : ''}
+                    `;
+                    playerInputsEl.appendChild(playerDiv);
+                });
             }
 
-            localStorage.setItem('golfOECDGame', JSON.stringify(gameData));
-        });
+            if (state.ruleValues) {
+                Object.entries(state.ruleValues).forEach(([key, value]) => {
+                    if(ruleInputs[key]) ruleInputs[key].value = value;
+                });
+            }
 
-        // 페이지 로드 시 데이터 복원
-        window.addEventListener('load', function() {
-            const savedData = localStorage.getItem('golfOECDGame');
-            if (savedData) {
-                const gameData = JSON.parse(savedData);
-                
-                // 플레이어 복원
-                if (gameData.players && gameData.players.length > 0) {
-                    const playerInputs = document.getElementById('playerInputs');
-                    playerInputs.innerHTML = '';
-                    
-                    gameData.players.forEach((player, index) => {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player-input';
-                        playerDiv.innerHTML = `
-                            <input type="text" value="${player}" maxlength="10">
-                            ${index > 0 ? '<button class="remove-player-btn" onclick="removePlayer(this)">삭제</button>' : ''}
-                        `;
-                        playerInputs.appendChild(playerDiv);
-                    });
-                }
-                
-                // 룰 복원
-                if (gameData.rules) {
-                    Object.entries(gameData.rules).forEach(([key, value]) => {
-                        const input = document.getElementById(key + 'Rule');
-                        if (input) input.value = value;
-                    });
-                }
-                
-                // 커스텀 룰 복원
-                if (gameData.customRules) {
-                    customRules = gameData.customRules;
-                    displayCustomRules();
-                }
-                
-                updateHoles();
-                
-                // 선택된 룰 복원
-                setTimeout(() => {
-                    if (gameData.selectedRules) {
-                        const ruleTypes = [
-                            { key: 'ob', name: '오비', color: '#e74c3c' },
-                            { key: 'hazard', name: '해저드', color: '#f39c12' },
-                            { key: 'mulligan', name: '멀리건', color: '#e74e22' },
-                            { key: 'bunker', name: '벙커', color: '#f1c40f' },
-                            { key: 'threePutt', name: '쓰리퍼트', color: '#9b59b6' },
-                            { key: 'tripleBogey', name: '트리플보기', color: '#e67e22' }
-                        ];
-                        
-                        // 커스텀 룰 추가
-                        Object.entries(customRules).forEach(([name, rule]) => {
-                            const color = rule.amount >= 0 ? '#6c757d' : '#2980b9';
-                            ruleTypes.push({
-                                key: rule.key,
-                                name: name,
-                                color: color
-                            });
-                        });
+            if (state.customRules) {
+                customRules = state.customRules;
+            }
+            
+            updateAndRender();
 
-                        Object.entries(gameData.selectedRules).forEach(([hole, playerRules]) => {
-                            Object.entries(playerRules).forEach(([playerIndex, selectedRules]) => {
-                                const rulesContainer = document.getElementById(`rules_${hole}_${playerIndex}`);
-                                if (rulesContainer) {
-                                    selectedRules.forEach(ruleKey => {
-                                        const selectedRule = ruleTypes.find(r => r.key === ruleKey);
-                                        if (selectedRule) {
-                                            const ruleElement = document.createElement('span');
-                                            ruleElement.className = 'oecd-rule selected';
-                                            ruleElement.dataset.rule = ruleKey;
-                                            ruleElement.style.backgroundColor = selectedRule.color;
-                                            ruleElement.style.borderColor = selectedRule.color;
-                                            ruleElement.textContent = selectedRule.name;
-                                            
-                                            ruleElement.addEventListener('click', function() {
-                                                this.remove();
-                                                updateTotal();
-                                            });
-
-                                            rulesContainer.insertBefore(ruleElement, rulesContainer.querySelector('.add-rule-btn'));
-                                        }
-                                    });
+            if (state.scores) {
+                setTimeout(() => { // Wait for render
+                    for (const hole in state.scores) {
+                        for (const playerIndex in state.scores[hole]) {
+                            const allRules = { ...rules, ...Object.fromEntries(Object.entries(customRules).map(([name, rule]) => [name, {...rule, name}])) };
+                            state.scores[hole][playerIndex].forEach(ruleKey => {
+                                if(allRules[ruleKey]) {
+                                    addRuleToPlayer(hole, playerIndex, ruleKey, allRules[ruleKey]);
                                 }
                             });
-                        });
-                        updateTotal();
+                        }
                     }
                 }, 100);
             }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            
+            playerInputsEl.addEventListener('input', (e) => {
+                if (e.target.tagName === 'INPUT') {
+                    updateAndRender();
+                }
+            });
+
+            Object.values(ruleInputs).forEach(input => {
+                input.addEventListener('change', updateAndRender);
+            });
         });
+
     </script>
 </body>
 </html>
