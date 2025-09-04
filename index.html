@@ -635,8 +635,28 @@
 
             document.body.appendChild(menu);
             const rect = button.getBoundingClientRect();
-            menu.style.left = `${window.scrollX + rect.left}px`;
-            menu.style.top = `${window.scrollY + rect.bottom + 5}px`;
+            
+            let menuLeft = window.scrollX + rect.left;
+            let menuTop = window.scrollY + rect.bottom + 5;
+
+            menu.style.left = `${menuLeft}px`;
+            menu.style.top = `${menuTop}px`;
+
+            // Adjust position if it overflows the viewport
+            const menuRect = menu.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            if (menuRect.right > viewportWidth) {
+                menu.style.left = `${window.scrollX + viewportWidth - menuRect.width - 5}px`;
+            }
+            if (menuRect.left < 0) {
+                menu.style.left = `${window.scrollX + 5}px`;
+            }
+            if (menuRect.bottom > viewportHeight) {
+                menu.style.top = `${window.scrollY + rect.top - menuRect.height - 5}px`;
+            }
+
 
             // Use a more robust way to close the menu
             setTimeout(() => {
