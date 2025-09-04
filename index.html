@@ -408,6 +408,24 @@
             }
         }
 
+        .rule-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            padding: 5px;
+            min-width: 150px;
+        }
+        .rule-menu-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .rule-menu-item:hover {
+            background-color: #f0f0f0;
+        }
+
         @media (max-width: 480px) {
             body { padding: 10px; }
             .container { border-radius: 10px; }
@@ -585,47 +603,51 @@
         }
         
         function showRuleMenu(button, holeNumber, playerIndex) {
+            // Close any existing menus
+            const existingMenu = document.querySelector('.rule-menu');
+            if (existingMenu) {
+                existingMenu.remove();
+            }
+
             const allRules = { ...rules, ...Object.fromEntries(Object.entries(customRules).map(([name, rule]) => [name, {...rule, name}])) };
             
             const menu = document.createElement('div');
             menu.className = 'rule-menu';
-            menu.style.cssText = `
-                position: absolute;
-                background: white;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                z-index: 100;
-                padding: 5px;
-            `;
-
-            for (const key in allRules) {
-                const rule = allRules[key];
+            
+            if (Object.keys(allRules).length === 0) {
                 const item = document.createElement('div');
-                item.textContent = `${rule.name} (${rule.amount.toLocaleString()}원)`;
-                item.style.cssText = `
-                    padding: 8px 12px;
-                    cursor: pointer;
-                `;
-                item.onmouseover = () => item.style.backgroundColor = '#f0f0f0';
-                item.onmouseout = () => item.style.backgroundColor = 'white';
-                item.onclick = () => {
-                    addRuleToPlayer(holeNumber, playerIndex, key, rule);
-                    document.body.removeChild(menu);
-                };
+                item.className = 'rule-menu-item';
+                item.textContent = '추가할 룰이 없습니다.';
                 menu.appendChild(item);
+            } else {
+                for (const key in allRules) {
+                    const rule = allRules[key];
+                    const item = document.createElement('div');
+                    item.className = 'rule-menu-item';
+                    item.textContent = `${rule.name} (${rule.amount.toLocaleString()}원)`;
+                    item.onclick = () => {
+                        addRuleToPlayer(holeNumber, playerIndex, key, rule);
+                        menu.remove();
+                    };
+                    menu.appendChild(item);
+                }
             }
 
             document.body.appendChild(menu);
             const rect = button.getBoundingClientRect();
-            menu.style.left = `${rect.left}px`;
-            menu.style.top = `${rect.bottom + 5}px`;
+            menu.style.left = `${window.scrollX + rect.left}px`;
+            menu.style.top = `${window.scrollY + rect.bottom + 5}px`;
 
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target) && e.target !== button) {
-                    if(document.body.contains(menu)) document.body.removeChild(menu);
-                }
-            }, { once: true });
+            // Use a more robust way to close the menu
+            setTimeout(() => {
+                const closeMenu = (e) => {
+                    if (!menu.contains(e.target)) {
+                        menu.remove();
+                        document.removeEventListener('click', closeMenu);
+                    }
+                };
+                document.addEventListener('click', closeMenu);
+            }, 0);
         }
 
         function addRuleToPlayer(holeNumber, playerIndex, ruleKey, ruleData) {
