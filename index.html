@@ -455,6 +455,31 @@
             .player-input { flex-direction: column; align-items: stretch; }
             .total-scores { grid-template-columns: repeat(2, 1fr); }
         }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .floating-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -916,8 +941,45 @@
             Object.values(ruleInputs).forEach(input => {
                 input.addEventListener('change', updateAndRender);
             });
+
+            const scrollToTotalBtn = document.getElementById('scrollToTotalBtn');
+            const totalSectionEl = document.querySelector('.total-section');
+            let lastScrollPosition = 0;
+            let isAtTotal = false;
+
+            scrollToTotalBtn.addEventListener('click', () => {
+                if (isAtTotal) {
+                    window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+                    scrollToTotalBtn.innerHTML = '🏆';
+                    isAtTotal = false;
+                } else {
+                    lastScrollPosition = window.scrollY;
+                    totalSectionEl.scrollIntoView({ behavior: 'smooth' });
+                    scrollToTotalBtn.innerHTML = '⬆️';
+                    isAtTotal = true;
+                }
+            });
+        });
+
+        const scrollToTotalBtn = document.getElementById('scrollToTotalBtn');
+        const totalSectionEl = document.querySelector('.total-section');
+        let lastScrollPosition = 0;
+        let isAtTotal = false;
+
+        scrollToTotalBtn.addEventListener('click', () => {
+            if (isAtTotal) {
+                window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+                scrollToTotalBtn.innerHTML = '🏆';
+                isAtTotal = false;
+            } else {
+                lastScrollPosition = window.scrollY;
+                totalSectionEl.scrollIntoView({ behavior: 'smooth' });
+                scrollToTotalBtn.innerHTML = '⬆️';
+                isAtTotal = true;
+            }
         });
 
     </script>
+    <button id="scrollToTotalBtn" class="floating-btn">🏆</button>
 </body>
 </html>
