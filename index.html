@@ -474,6 +474,7 @@
             <div style="display: flex; gap: 10px; margin-top: 15px;">
                 <button class="btn" onclick="addPlayer()">+ 플레이어 추가</button>
                 <button class="btn btn-secondary" onclick="resetAll()">🔄 전체 초기화</button>
+                <button class="btn btn-danger" onclick="resetScores()">스코어 기록 초기화</button>
             </div>
         </div>
 
@@ -762,6 +763,14 @@
             customRules = {};
             localStorage.removeItem('golfOECDGame');
             updateAndRender();
+        }
+
+        function resetScores() {
+            if (!confirm('모든 홀의 스코어 기록을 초기화하시겠습니까?')) return;
+            document.querySelectorAll('.oecd-rules-container').forEach(container => {
+                container.innerHTML = '';
+            });
+            updateTotal();
         }
 
         function renderCustomRules() {
