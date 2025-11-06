@@ -279,6 +279,8 @@ function App() {
   const lastScrollPosition = useRef(0);
   const [isAtTotal, setIsAtTotal] = useState(false);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
     const savedState = localStorage.getItem('golfOECDGame');
     if (savedState) {
@@ -298,8 +300,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const state = { players, rules, customRules, scores };
-    localStorage.setItem('golfOECDGame', JSON.stringify(state));
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      const state = { players, rules, customRules, scores };
+      localStorage.setItem('golfOECDGame', JSON.stringify(state));
+    }
   }, [players, rules, customRules, scores]);
 
   const resetAll = () => {
