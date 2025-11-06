@@ -536,8 +536,6 @@
         </div>
     </div>
 
-    <button id="scrollToTotalBtn" class="floating-btn">🏆</button>
-
     <script>
         let players = [];
         let rules = {};
@@ -962,6 +960,26 @@
                 }
             });
         });
+
+        const scrollToTotalBtn = document.getElementById('scrollToTotalBtn');
+        const totalSectionEl = document.querySelector('.total-section');
+        let lastScrollPosition = 0;
+        let isAtTotal = false;
+
+        scrollToTotalBtn.addEventListener('click', () => {
+            if (isAtTotal) {
+                window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+                scrollToTotalBtn.innerHTML = '🏆';
+                isAtTotal = false;
+            } else {
+                lastScrollPosition = window.scrollY;
+                totalSectionEl.scrollIntoView({ behavior: 'smooth' });
+                scrollToTotalBtn.innerHTML = '⬆️';
+                isAtTotal = true;
+            }
+        });
+
     </script>
+    <button id="scrollToTotalBtn" class="floating-btn">🏆</button>
 </body>
 </html>
