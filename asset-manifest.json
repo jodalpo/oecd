@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/oecd/static/css/main.5328f3dd.css",
-    "main.js": "/oecd/static/js/main.48c0e7da.js",
+    "main.css": "/oecd/static/css/main.c4549079.css",
+    "main.js": "/oecd/static/js/main.f0fa8c5e.js",
     "static/js/453.09988bdc.chunk.js": "/oecd/static/js/453.09988bdc.chunk.js",
     "index.html": "/oecd/index.html",
-    "main.5328f3dd.css.map": "/oecd/static/css/main.5328f3dd.css.map",
-    "main.48c0e7da.js.map": "/oecd/static/js/main.48c0e7da.js.map",
+    "main.c4549079.css.map": "/oecd/static/css/main.c4549079.css.map",
+    "main.f0fa8c5e.js.map": "/oecd/static/js/main.f0fa8c5e.js.map",
     "453.09988bdc.chunk.js.map": "/oecd/static/js/453.09988bdc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5328f3dd.css",
-    "static/js/main.48c0e7da.js"
+    "static/css/main.c4549079.css",
+    "static/js/main.f0fa8c5e.js"
   ]
 }
