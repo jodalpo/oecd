@@ -2,19 +2,19 @@ import React from 'react';
 
 function PlayerSetup({ players, handlePlayerNameChange, addPlayer, removePlayer, resetAll, resetScoresFn }) {
   return (
-    <div className="p-6 border-b border-light-gray">
-      <h2 className="text-2xl font-bold mb-5 flex items-center">
-        <span className="w-1 h-5 bg-primary rounded-sm mr-2.5"></span>
-        👥 플레이어 설정 (최대 5명)
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-xl font-bold mb-5 text-primary flex items-center">
+        <span role="img" aria-label="player-icon" className="mr-2">👥</span>
+        플레이어 설정 (최대 5명)
       </h2>
-      <div id="playerInputs" className="space-y-2">
+      <div id="playerInputs" className="space-y-4">
         {players.map((player, index) => (
           <div className="flex gap-2 items-center" key={index}>
             <input
               type="text"
               placeholder={`플레이어 ${index + 1} 이름`}
               maxLength="10"
-              className="flex-1 p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-primary transition-colors"
+              className="flex-1 p-2 bg-transparent border-b-2 border-gray-200 focus:outline-none focus:border-primary transition-colors"
               value={player}
               onChange={(e) => handlePlayerNameChange(index, e.target.value)}
             />
@@ -29,21 +29,22 @@ function PlayerSetup({ players, handlePlayerNameChange, addPlayer, removePlayer,
           </div>
         ))}
       </div>
-      <div className="flex gap-2 mt-4 flex-wrap">
+      <div className="flex gap-2 mt-6 flex-wrap">
         <button 
-          className="bg-primary text-white border-none py-3 px-5 rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-blue-600 hover:-translate-y-0.5"
+          className="bg-primary text-white border-none py-2 px-4 rounded-md cursor-pointer text-base font-medium transition-all hover:bg-primary-dark"
           onClick={addPlayer}
         >
           + 플레이어 추가
         </button>
         <button 
-          className="bg-dark-gray text-white border-none py-3 px-5 rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-gray-600 hover:-translate-y-0.5"
+          className="bg-light-gray text-dark-gray border border-gray-300 py-2 px-4 rounded-md cursor-pointer text-base font-medium transition-all hover:bg-gray-200 flex items-center justify-center"
           onClick={resetAll}
         >
-          🔄 전체 초기화
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-cw w-4 h-4 mr-2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
+          전체 초기화
         </button>
         <button 
-          className="bg-danger text-white border-none py-3 px-5 rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-red-600 hover:-translate-y-0.5"
+          className="bg-danger text-white border-none py-2 px-4 rounded-md cursor-pointer text-base font-medium transition-all hover:opacity-90"
           onClick={resetScoresFn}
         >
           스코어 기록 초기화

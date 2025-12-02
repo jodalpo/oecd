@@ -194,46 +194,48 @@ function App() {
 
 
   return (
-    <div className="max-w-5xl mx-auto bg-white overflow-hidden">
+    <div className="max-w-5xl mx-auto p-4 md:p-8">
       <Header />
       
-      <PlayerSetup 
-        players={players}
-        handlePlayerNameChange={handlePlayerNameChange}
-        addPlayer={addPlayer}
-        removePlayer={removePlayer}
-        resetAll={resetAll}
-        resetScoresFn={resetScoresFn}
-      />
+      <div className="space-y-8 mt-8">
+        <PlayerSetup 
+          players={players}
+          handlePlayerNameChange={handlePlayerNameChange}
+          addPlayer={addPlayer}
+          removePlayer={removePlayer}
+          resetAll={resetAll}
+          resetScoresFn={resetScoresFn}
+        />
 
-      <RuleSetup
-        rules={rules}
-        handleRuleAmountChange={handleRuleAmountChange}
-        customRules={customRules}
-        customRuleName={customRuleName}
-        setCustomRuleName={setCustomRuleName}
-        customRuleAmount={customRuleAmount}
-        setCustomRuleAmount={setCustomRuleAmount}
-        addCustomRule={addCustomRule}
-        removeCustomRule={removeCustomRule}
-      />
+        <RuleSetup
+          rules={rules}
+          handleRuleAmountChange={handleRuleAmountChange}
+          customRules={customRules}
+          customRuleName={customRuleName}
+          setCustomRuleName={setCustomRuleName}
+          customRuleAmount={customRuleAmount}
+          setCustomRuleAmount={setCustomRuleAmount}
+          addCustomRule={addCustomRule}
+          removeCustomRule={removeCustomRule}
+        />
 
-      <Scorecard
-        players={players}
-        scores={scores}
-        allRulesForMenu={allRulesForMenu}
-        addRuleToPlayer={addRuleToPlayer}
-        removeRuleFromPlayer={removeRuleFromPlayer}
-        resetHole={resetHole}
-      />
+        <Scorecard
+          players={players}
+          scores={scores}
+          allRulesForMenu={allRulesForMenu}
+          addRuleToPlayer={addRuleToPlayer}
+          removeRuleFromPlayer={removeRuleFromPlayer}
+          resetHole={resetHole}
+        />
 
-      <Totals 
-        totalScores={totalScores}
-        totalSectionRef={totalSectionRef}
-      />
-      
+        <Totals 
+          totalScores={totalScores}
+          totalSectionRef={totalSectionRef}
+        />
+      </div>
+
       <button 
-        className="fixed bottom-8 right-8 w-16 h-16 bg-primary text-white rounded-full text-2xl cursor-pointer shadow-lg transition-all hover:bg-blue-600 hover:scale-110 flex justify-center items-center"
+        className="fixed bottom-8 right-8 w-16 h-16 bg-primary text-white rounded-full text-2xl cursor-pointer shadow-lg transition-all hover:bg-primary-dark hover:scale-110 flex justify-center items-center"
         onClick={scrollToTotal}
       >
         {isAtTotal ? '⬆️' : '🏆'}
