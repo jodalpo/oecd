@@ -18,12 +18,10 @@
     "build": "next build",
     "start": "npx serve@latest out",
     "lint": "next lint",
-    "export": "next build && next export",
-    "deploy": "next build && touch out/.nojekyll && gh-pages -d out"
+    "build:gh": "next build && rm -rf docs && mv out docs && touch docs/.nojekyll"
   },
   "devDependencies": {
     "autoprefixer": "^10",
-    "gh-pages": "^6.3.0",
     "postcss": "^8",
     "serve": "^14.2.5",
     "tailwindcss": "^3"
