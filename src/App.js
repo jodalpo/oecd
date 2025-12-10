@@ -238,7 +238,7 @@ function App() {
         className="fixed bottom-8 right-8 w-16 h-16 bg-primary text-white rounded-full text-2xl cursor-pointer shadow-lg transition-all hover:bg-primary-dark hover:scale-110 flex justify-center items-center"
         onClick={scrollToTotal}
       >
-        {isAtTotal ? '⬆️' : '🏆'}
+        {isAtTotal ? '⇑' : '🏆'}
       </button>
     </div>
   );
