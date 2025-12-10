@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Header from './components/Header';
-import PlayerSetup from './components/PlayerSetup';
-import RuleSetup from './components/RuleSetup';
-import Scorecard from './components/Scorecard';
-import Totals from './components/Totals';
+import Header from '../src/components/Header';
+import PlayerSetup from '../src/components/PlayerSetup';
+import RuleSetup from '../src/components/RuleSetup';
+import Scorecard from '../src/components/Scorecard';
+import Totals from '../src/components/Totals';
 
-function App() {
+function HomePage() {
   const [players, setPlayers] = useState(['']);
   const [rules, setRules] = useState({
     ob: { name: '오비', amount: 1000, color: 'danger' },
@@ -244,4 +244,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
