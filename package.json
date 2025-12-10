@@ -2,6 +2,7 @@
   "name": "golf-oecd",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jodalpo.github.io/oecd/",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -16,7 +17,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "next build && gh-pages -d out"
   },
   "devDependencies": {
     "autoprefixer": "^10",

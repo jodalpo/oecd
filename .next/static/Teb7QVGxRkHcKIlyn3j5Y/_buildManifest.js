@@ -1,13 +1,18 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/9867fb3ce4c84c8f.js"
+    "static/chunks/434e589604a9eaf3.js"
   ],
   "/_error": [
-    "static/chunks/04d80aa7466653b4.js"
+    "static/chunks/e0911f14d80afd1f.js"
   ],
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/oecd//_next/:path+",
+        "destination": "/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [
