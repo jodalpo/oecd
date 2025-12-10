@@ -42,7 +42,7 @@
         256,
         384
       ],
-      "path": "/_next/image",
+      "path": "/oecd/_next/image",
       "loader": "default",
       "loaderFile": "",
       "domains": [],
@@ -75,7 +75,7 @@
       "maxInactiveAge": 60000,
       "pagesBufferLength": 5
     },
-    "basePath": "",
+    "basePath": "/oecd",
     "sassOptions": {},
     "trailingSlash": false,
     "i18n": null,

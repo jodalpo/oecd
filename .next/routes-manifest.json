@@ -2,8 +2,17 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "",
+  "basePath": "/oecd",
   "redirects": [
+    {
+      "source": "/oecd/",
+      "destination": "/oecd",
+      "basePath": false,
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^/oecd/$"
+    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
@@ -18,7 +27,7 @@
     "beforeFiles": [
       {
         "source": "/oecd//_next/:path+",
-        "destination": "/_next/:path+",
+        "destination": "/oecd/_next/:path+",
         "regex": "^/oecd//_next(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))(?:/)?$"
       }
     ],
