@@ -1,16 +1,16 @@
 (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
     typeof document === "object" ? document.currentScript : undefined,
-    {"otherChunks":["static/chunks/node_modules_next_dist_compiled_8ca6b690._.js","static/chunks/node_modules_next_dist_shared_lib_82dc2e9d._.js","static/chunks/node_modules_next_dist_client_d0aa886c._.js","static/chunks/node_modules_next_dist_6024eba3._.js","static/chunks/node_modules_react-dom_4411d9bd._.js","static/chunks/node_modules_f1be3ba2._.js","static/chunks/[root-of-the-server]__01feb856._.js",{"path":"static/chunks/styles_globals_dc36e6c9.css","included":["[project]/styles/globals.css [client] (css)"]}],"runtimeModuleIds":["[project]/node_modules/next/dist/compiled/@next/react-refresh-utils/dist/runtime.js [client] (ecmascript)","[project]/node_modules/next/dist/client/next-dev-turbopack.js [client] (ecmascript)","[hmr-entry]/hmr-entry.js { ENTRY => \"[project]/pages/_app\" }"]}
+    {"otherChunks":["static/chunks/node_modules_next_dist_compiled_8ca6b690._.js","static/chunks/node_modules_next_dist_shared_lib_cf5b50a6._.js","static/chunks/node_modules_next_dist_client_d0aa886c._.js","static/chunks/node_modules_next_dist_19fd0646._.js","static/chunks/node_modules_next_error_1cfbb379.js","static/chunks/[next]_entry_page-loader_ts_43b523b5._.js","static/chunks/node_modules_react-dom_4411d9bd._.js","static/chunks/node_modules_7f09fef0._.js","static/chunks/[root-of-the-server]__092393de._.js"],"runtimeModuleIds":["[project]/node_modules/next/dist/compiled/@next/react-refresh-utils/dist/runtime.js [client] (ecmascript)","[project]/node_modules/next/dist/client/next-dev-turbopack.js [client] (ecmascript)","[hmr-entry]/hmr-entry.js { ENTRY => \"[project]/pages/_error\" }"]}
 ]);
 (() => {
 if (!Array.isArray(globalThis.TURBOPACK)) {
     return;
 }
 
-const CHUNK_BASE_PATH = "/_next/";
+const CHUNK_BASE_PATH = "/oecd/_next/";
 const CHUNK_SUFFIX_PATH = "";
 const RELATIVE_ROOT_PATH = "/ROOT";
-const RUNTIME_PUBLIC_PATH = "/_next/";
+const RUNTIME_PUBLIC_PATH = "/oecd/_next/";
 /**
  * This file contains runtime types and functions that are shared between all
  * TurboPack ECMAScript runtimes.
@@ -1833,4 +1833,4 @@ chunkListsToRegister.forEach(registerChunkList);
 })();
 
 
-//# sourceMappingURL=pages__app_6d64d961._.js.map
+//# sourceMappingURL=pages__error_7eea71dc._.js.map

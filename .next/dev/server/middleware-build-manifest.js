@@ -9,7 +9,7 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/node_modules_f1be3ba2._.js",
       "static/chunks/[root-of-the-server]__ce2c1b2a._.js",
       "static/chunks/pages_index_2da965e7._.js",
-      "static/chunks/turbopack-pages_index_7bca9278._.js"
+      "static/chunks/turbopack-pages_index_b23a1dfc._.js"
     ],
     "/_app": [
       "static/chunks/node_modules_next_dist_compiled_8ca6b690._.js",
@@ -21,7 +21,7 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/[root-of-the-server]__01feb856._.js",
       "static/chunks/styles_globals_dc36e6c9.css",
       "static/chunks/pages__app_2da965e7._.js",
-      "static/chunks/turbopack-pages__app_6d64d961._.js"
+      "static/chunks/turbopack-pages__app_3866e745._.js"
     ]
   },
   "devFiles": [],

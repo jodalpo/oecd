@@ -7,5 +7,5 @@ __turbopack_load_page_chunks__("/", [
   "static/chunks/node_modules_f1be3ba2._.js",
   "static/chunks/[root-of-the-server]__ce2c1b2a._.js",
   "static/chunks/pages_index_2da965e7._.js",
-  "static/chunks/turbopack-pages_index_7bca9278._.js"
+  "static/chunks/turbopack-pages_index_b23a1dfc._.js"
 ])
