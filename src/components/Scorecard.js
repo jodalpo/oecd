@@ -1,13 +1,12 @@
 import React from 'react';
 
 function Hole({ holeNumber, players, scores, allRulesForMenu, addRuleToPlayer, removeRuleFromPlayer, resetHole }) {
-    // A simplified design for the hole, based on the screenshot
     return (
-        <div className="border border-gray-200 rounded-lg p-4">
+        <div className="border border-border-color bg-background/20 rounded-lg p-4 transition-all hover:border-primary/30">
             <div className="flex justify-between items-center mb-3">
-                <span className="text-lg font-bold text-primary">{holeNumber}번 홀</span>
+                <span className="text-sm font-bold text-primary">{holeNumber}번 홀</span>
                 <button 
-                    className="bg-light-gray text-dark-gray border border-gray-300 py-1 px-3 rounded-md text-xs cursor-pointer hover:bg-gray-200"
+                    className="bg-card-bg text-text-secondary border border-border-color py-1 px-2.5 rounded-md text-xs cursor-pointer hover:bg-background transition-colors"
                     onClick={() => resetHole(holeNumber)}
                 >
                     초기화
@@ -18,11 +17,11 @@ function Hole({ holeNumber, players, scores, allRulesForMenu, addRuleToPlayer, r
                     if (!player) return null;
                     const playerScores = scores[holeNumber]?.[playerIndex] || [];
                     return (
-                        <div key={playerIndex}>
+                        <div key={playerIndex} className="border-t border-border-color/30 pt-3 first:border-none first:pt-0">
                             <div className="flex items-center justify-between">
-                                <span className="font-semibold text-text-primary">{player}</span>
+                                <span className="text-sm font-bold text-text-primary">{player}</span>
                                 <select
-                                    className="bg-gray-100 text-dark-gray text-xs px-2 py-1 rounded-full border border-transparent hover:bg-gray-200 cursor-pointer focus:outline-none"
+                                    className="bg-card-bg text-text-primary text-xs px-2.5 py-1 rounded-md border border-border-color hover:border-primary/50 cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary/35"
                                     onChange={(e) => addRuleToPlayer(holeNumber, playerIndex, e.target.value)}
                                     value=""
                                 >
@@ -38,13 +37,18 @@ function Hole({ holeNumber, players, scores, allRulesForMenu, addRuleToPlayer, r
                                         const rule = allRulesForMenu[ruleKey];
                                         if (!rule) return null;
                                         const isPositive = rule.amount >= 0;
-                                        const bgColor = isPositive ? 'bg-red-100' : 'bg-green-100';
-                                        const textColor = isPositive ? 'text-danger' : 'text-primary';
+                                        
+                                        // Dynamic glassmorphism badge colors that work in both light and dark modes
+                                        const badgeClass = isPositive 
+                                            ? 'bg-danger/10 text-danger border border-danger/25' 
+                                            : 'bg-primary/10 text-primary border border-primary/25';
+                                            
                                         return (
                                             <span
                                                 key={ruleIndex}
-                                                className={`flex items-center px-2 py-1 rounded-full text-xs cursor-pointer ${bgColor} ${textColor}`}
+                                                className={`flex items-center px-2 py-0.5 rounded-full text-xs font-semibold cursor-pointer border ${badgeClass} transition-opacity hover:opacity-80`}
                                                 onClick={() => removeRuleFromPlayer(holeNumber, playerIndex, ruleIndex)}
+                                                title="클릭하여 삭제"
                                             >
                                                 {rule.name}
                                                 <span className="ml-1.5 opacity-70">×</span>
@@ -64,7 +68,7 @@ function Hole({ holeNumber, players, scores, allRulesForMenu, addRuleToPlayer, r
 
 function Scorecard({ players, scores, allRulesForMenu, addRuleToPlayer, removeRuleFromPlayer, resetHole }) {
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-card-bg rounded-lg border border-border-color shadow-sm transition-all duration-300">
        <h2 className="text-xl font-bold mb-5 text-primary flex items-center">
         <span role="img" aria-label="scorecard-icon" className="mr-2">⛳</span>
         홀별 스코어 기록
