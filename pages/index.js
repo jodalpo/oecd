@@ -4,6 +4,7 @@ import PlayerSetup from '../src/components/PlayerSetup';
 import RuleSetup from '../src/components/RuleSetup';
 import Scorecard from '../src/components/Scorecard';
 import Totals from '../src/components/Totals';
+import ScoreSummaryTable from '../src/components/ScoreSummaryTable';
 
 function HomePage() {
   const [players, setPlayers] = useState(['']);
@@ -217,6 +218,11 @@ function HomePage() {
           setCustomRuleAmount={setCustomRuleAmount}
           addCustomRule={addCustomRule}
           removeCustomRule={removeCustomRule}
+        />
+
+        <ScoreSummaryTable 
+          players={players}
+          scores={scores}
         />
 
         <Scorecard
