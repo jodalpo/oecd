@@ -29,26 +29,29 @@ function PlayerSetup({ players, handlePlayerNameChange, addPlayer, removePlayer,
           </div>
         ))}
       </div>
-      <div className="flex gap-3 mt-6 flex-wrap">
+      <div className="space-y-3 mt-6">
         <button 
-          className="bg-primary text-white border-none py-2.5 px-5 rounded-md cursor-pointer text-sm font-semibold transition-all hover:bg-primary-dark shadow-sm hover:shadow-md"
+          className="w-full bg-primary text-white border-none py-3 px-5 rounded-md cursor-pointer text-sm font-semibold transition-all hover:bg-primary-dark shadow-sm hover:shadow-md flex justify-center items-center gap-1.5"
           onClick={addPlayer}
         >
-          + 플레이어 추가
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+          플레이어 추가
         </button>
-        <button 
-          className="bg-card-bg text-text-secondary border border-border-color py-2.5 px-5 rounded-md cursor-pointer text-sm font-semibold transition-all hover:bg-background flex items-center justify-center shadow-sm"
-          onClick={resetAll}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rotate-cw w-4 h-4 mr-2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
-          전체 초기화
-        </button>
-        <button 
-          className="bg-danger/10 text-danger border border-danger/20 py-2.5 px-5 rounded-md cursor-pointer text-sm font-semibold transition-all hover:bg-danger hover:text-white shadow-sm"
-          onClick={resetScoresFn}
-        >
-          스코어 기록 초기화
-        </button>
+        <div className="grid grid-cols-2 gap-2.5">
+          <button 
+            className="bg-card-bg text-text-secondary border border-border-color py-2.5 px-3 rounded-md cursor-pointer text-xs font-semibold transition-all hover:bg-background flex items-center justify-center shadow-sm"
+            onClick={resetAll}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rotate-cw w-3.5 h-3.5 mr-1.5"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
+            전체 초기화
+          </button>
+          <button 
+            className="bg-danger/10 text-danger border border-danger/20 py-2.5 px-3 rounded-md cursor-pointer text-xs font-semibold transition-all hover:bg-danger hover:text-white shadow-sm flex items-center justify-center"
+            onClick={resetScoresFn}
+          >
+            스코어 초기화
+          </button>
+        </div>
       </div>
     </div>
   );
