@@ -7,19 +7,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#4A6B4D',
-        'primary-dark': '#3B563D',
-        'secondary': '#A98C76',
-        'danger': '#D9534F',
-        'success': '#4A6B4D',
-        'light-gray': '#ecf0f1',
-        'dark-gray': '#7f8c8d',
-        'text-primary': '#2c3e50',
-        'background': '#F9F6F2',
+        'background': 'var(--color-bg)',
+        'card-bg': 'var(--color-card-bg)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-secondary': 'var(--color-text-secondary)',
+        'primary': 'var(--color-primary)',
+        'primary-dark': 'var(--color-primary-dark)',
+        'secondary': 'var(--color-secondary)',
+        'danger': 'var(--color-danger)',
+        'success': 'var(--color-success)',
+        'warning': 'var(--color-warning)',
+        'border-color': 'var(--color-border)',
+        'light-gray': 'var(--color-border)', // For backwards compatibility
+        'dark-gray': 'var(--color-text-secondary)', // For backwards compatibility
         'white': '#ffffff',
       },
       boxShadow: {
-        'DEFAULT': '0 4px 6px rgba(0,0,0,0.1)',
+        'DEFAULT': '0 4px 12px var(--color-shadow)',
+        'md': '0 6px 16px var(--color-shadow)',
       },
       borderRadius: {
         'DEFAULT': '12px',
