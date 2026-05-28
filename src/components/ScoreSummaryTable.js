@@ -114,7 +114,7 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
                   })}
                   <td className="py-3 px-4 font-extrabold bg-primary/5 text-primary border-l border-border-color text-sm">
                     <div className="flex flex-col items-center justify-center">
-                      <span className="leading-tight">{totalPenalties}회</span>
+                      <span className="text-danger leading-tight">{totalPenalties}회</span>
                       {totalBonuses > 0 && (
                         <span className="text-success text-xs font-semibold leading-tight">({totalBonuses}회)</span>
                       )}
