@@ -1,19 +1,27 @@
 import React from 'react';
 
-function ScoreSummaryTable({ players, scores }) {
+function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
   const activePlayers = players.filter(p => p !== '');
   const holes = Array.from({ length: 18 }, (_, i) => i + 1);
 
   if (activePlayers.length === 0) return null;
 
-  // Calculate stats
+  // 금액이 0보다 큰 벌칙 룰인지 판별 (음수 금액 보너스는 제외)
+  const isPenalty = (ruleKey) => {
+    const rule = allRulesForMenu?.[ruleKey];
+    return rule ? rule.amount >= 0 : true;
+  };
+
+  // Calculate stats filtering out negative rules (bonuses)
   const getHoleScoreCount = (holeNum, playerIndex) => {
-    return scores[holeNum]?.[playerIndex]?.length || 0;
+    const playerHoleScores = scores[holeNum]?.[playerIndex] || [];
+    return playerHoleScores.filter(isPenalty).length;
   };
 
   const getPlayerTotalPenalties = (playerIndex) => {
     return Object.values(scores).reduce((sum, holeScores) => {
-      return sum + (holeScores[playerIndex]?.length || 0);
+      const playerHoleScores = holeScores[playerIndex] || [];
+      return sum + playerHoleScores.filter(isPenalty).length;
     }, 0);
   };
 

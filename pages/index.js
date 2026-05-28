@@ -223,6 +223,7 @@ function HomePage() {
         <ScoreSummaryTable 
           players={players}
           scores={scores}
+          allRulesForMenu={allRulesForMenu}
         />
 
         <Scorecard
