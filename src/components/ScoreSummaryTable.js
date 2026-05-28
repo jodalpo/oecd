@@ -6,22 +6,43 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
 
   if (activePlayers.length === 0) return null;
 
-  // 금액이 0보다 큰 벌칙 룰인지 판별 (음수 금액 보너스는 제외)
+  // 벌칙(양수 금액) 판별
   const isPenalty = (ruleKey) => {
     const rule = allRulesForMenu?.[ruleKey];
     return rule ? rule.amount >= 0 : true;
   };
 
-  // Calculate stats filtering out negative rules (bonuses)
-  const getHoleScoreCount = (holeNum, playerIndex) => {
+  // 보너스(음수 금액) 판별
+  const isBonus = (ruleKey) => {
+    const rule = allRulesForMenu?.[ruleKey];
+    return rule ? rule.amount < 0 : false;
+  };
+
+  // 홀별 벌칙 횟수 산출
+  const getHolePenaltyCount = (holeNum, playerIndex) => {
     const playerHoleScores = scores[holeNum]?.[playerIndex] || [];
     return playerHoleScores.filter(isPenalty).length;
   };
 
+  // 홀별 보너스 횟수 산출
+  const getHoleBonusCount = (holeNum, playerIndex) => {
+    const playerHoleScores = scores[holeNum]?.[playerIndex] || [];
+    return playerHoleScores.filter(isBonus).length;
+  };
+
+  // 누적 총 벌칙 횟수
   const getPlayerTotalPenalties = (playerIndex) => {
     return Object.values(scores).reduce((sum, holeScores) => {
       const playerHoleScores = holeScores[playerIndex] || [];
       return sum + playerHoleScores.filter(isPenalty).length;
+    }, 0);
+  };
+
+  // 누적 총 보너스 횟수
+  const getPlayerTotalBonuses = (playerIndex) => {
+    return Object.values(scores).reduce((sum, holeScores) => {
+      const playerHoleScores = holeScores[playerIndex] || [];
+      return sum + playerHoleScores.filter(isBonus).length;
     }, 0);
   };
 
@@ -32,7 +53,7 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
         18홀 통합 요약 표
       </h2>
       <p className="text-xs text-text-secondary mb-4">
-        각 홀별 플레이어의 벌칙 기록 횟수가 실시간 집계됩니다. (숫자가 높을수록 벌칙이 많이 부과됨)
+        벌칙 횟수는 빨간색 숫자로, 감면 보너스 횟수는 녹색 괄호 <span className="text-success font-semibold">( )</span> 안의 숫자로 실시간 집계됩니다.
       </p>
       
       <div className="overflow-x-auto border border-border-color rounded-lg scrollbar-thin">
@@ -47,7 +68,7 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
                   {hole}
                 </th>
               ))}
-              <th className="py-3 px-4 font-bold bg-primary/10 text-primary border-l border-border-color min-w-[50px]">
+              <th className="py-3 px-4 font-bold bg-primary/10 text-primary border-l border-border-color min-w-[65px]">
                 합계
               </th>
             </tr>
@@ -56,6 +77,7 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
             {players.map((player, playerIndex) => {
               if (!player) return null;
               const totalPenalties = getPlayerTotalPenalties(playerIndex);
+              const totalBonuses = getPlayerTotalBonuses(playerIndex);
               
               return (
                 <tr 
@@ -66,24 +88,37 @@ function ScoreSummaryTable({ players, scores, allRulesForMenu }) {
                     {player}
                   </td>
                   {holes.map(hole => {
-                    const count = getHoleScoreCount(hole, playerIndex);
-                    const hasPenalties = count > 0;
+                    const penaltyCount = getHolePenaltyCount(hole, playerIndex);
+                    const bonusCount = getHoleBonusCount(hole, playerIndex);
+                    const hasData = penaltyCount > 0 || bonusCount > 0;
                     
                     return (
                       <td 
                         key={hole} 
                         className={`py-2.5 px-1 border-r border-border-color/40 text-sm font-medium ${
-                          hasPenalties 
-                            ? 'bg-danger/5 text-danger font-bold' 
-                            : 'text-text-secondary/60'
+                          hasData ? 'bg-background/10' : 'text-text-secondary/40'
                         }`}
                       >
-                        {hasPenalties ? count : '-'}
+                        {hasData ? (
+                          <div className="flex items-center justify-center gap-0.5">
+                            {penaltyCount > 0 && (
+                              <span className="text-danger font-bold">{penaltyCount}</span>
+                            )}
+                            {bonusCount > 0 && (
+                              <span className="text-success font-semibold">({bonusCount})</span>
+                            )}
+                          </div>
+                        ) : '-'}
                       </td>
                     );
                   })}
                   <td className="py-3 px-4 font-extrabold bg-primary/5 text-primary border-l border-border-color text-sm">
-                    {totalPenalties}회
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="leading-tight">{totalPenalties}회</span>
+                      {totalBonuses > 0 && (
+                        <span className="text-success text-xs font-semibold leading-tight">({totalBonuses}회)</span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               );
